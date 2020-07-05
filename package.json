@@ -6,10 +6,7 @@
   "main": "index.js",
   "files": [
     "README.md",
-    "android",
-    "index.js",
-    "ios",
-    "react-native-loading-view.podspec"
+    "index.js"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -35,6 +32,7 @@
   },
   "devDependencies": {
     "react": "^16.9.0",
-    "react-native": "^0.61.5"
+    "react-native": "^0.61.5",
+    "prop-types": "^15.7.2"
   }
 }
