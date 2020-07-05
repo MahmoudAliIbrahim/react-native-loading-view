@@ -1,5 +1,5 @@
 {
-  "name": "react-native-loading-view",
+  "name": "@mahmoudaliibrahim/react-native-loading-view",
   "title": "React Native Loading View",
   "version": "1.0.0",
   "description": "Simple react-native loading view to use while waiting data to be fetched from remote api",

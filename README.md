@@ -1,19 +1,19 @@
-# react-native-loading-view
+# @mahmoudaliibrahim/react-native-loading-view
 
 ## Getting started
 
 npm:
 
-`$ npm install react-native-loading-view --save`
+`$ npm install @mahmoudaliibrahim/react-native-loading-view --save`
 
 yarn:
 
-`$ yarn add react-native-loading-view`
+`$ yarn add @mahmoudaliibrahim/react-native-loading-view`
 
 ## Usage
 
 ```javascript
-import LoadingView from "react-native-loading-view";
+import LoadingView from "@mahmoudaliibrahim/react-native-loading-view";
 
 // TODO: What to do with the module?
 <LoadingView isLoading={loadingState}>

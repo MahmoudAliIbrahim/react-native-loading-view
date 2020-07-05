@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, StyleSheet} from 'react-native';
-import LoadingView from 'react-native-loading-view';
+import LoadingView from '@mahmoudaliibrahim/react-native-loading-view';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
