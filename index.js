@@ -24,6 +24,7 @@ export default class LoadingView extends Component {
     loaderStyle: PropTypes.object,
     indicatorColor: PropTypes.string,
     indicatorSize: PropTypes.string || PropTypes.number,
+    unmount: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -39,6 +40,7 @@ export default class LoadingView extends Component {
       ios: "large",
       android: 75,
     }),
+    unmount: false,
   };
 
   renderLoader() {
@@ -63,10 +65,16 @@ export default class LoadingView extends Component {
   }
 
   render() {
-    const { containerStyle, children, isLoading } = this.props;
+    const { containerStyle, children, isLoading, unmount } = this.props;
+    let showContent;
+    if (unmount) {
+      showContent = unmount && isLoading ? false : true;
+    } else {
+      showContent = true;
+    }
     return (
       <View style={containerStyle}>
-        {children}
+        {showContent && children}
         {isLoading && this.renderLoader()}
       </View>
     );
