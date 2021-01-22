@@ -1,6 +1,12 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ActivityIndicator,
+  Platform,
+} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
