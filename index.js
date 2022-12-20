@@ -51,31 +51,29 @@ export default class LoadingView extends Component {
     renderLoader: null,
   };
 
+  renderLoadingIndicator() {
+    const { indicatorColor, indicatorSize, renderLoader } = this.props;
+
+    if (renderLoader) {
+      return renderLoader();
+    }
+
+    return (
+      <ActivityIndicator
+        color={indicatorColor}
+        size={indicatorSize}
+        animating
+      />
+    );
+  }
+
   renderLoader() {
-    const {
-      backgroundColor,
-      text,
-      textStyle,
-      loaderStyle,
-      indicatorColor,
-      indicatorSize,
-      renderLoader,
-    } = this.props;
+    const { backgroundColor, text, textStyle, loaderStyle } = this.props;
 
     return (
       <View style={[StyleSheet.absoluteFill, loaderStyle, { backgroundColor }]}>
-        {renderLoader ? (
-          renderLoader()
-        ) : (
-          <>
-            <ActivityIndicator
-              color={indicatorColor}
-              size={indicatorSize}
-              animating
-            />
-            <Text style={textStyle}>{text}</Text>
-          </>
-        )}
+        {renderLoadingIndicator()}
+        <Text style={textStyle}>{text}</Text>
       </View>
     );
   }
