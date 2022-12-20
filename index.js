@@ -31,6 +31,7 @@ export default class LoadingView extends Component {
     indicatorColor: PropTypes.string,
     indicatorSize: PropTypes.string || PropTypes.number,
     unmount: PropTypes.bool,
+    renderLoader: PropTypes.func,
   };
 
   static defaultProps = {
@@ -47,6 +48,7 @@ export default class LoadingView extends Component {
       android: 75,
     }),
     unmount: false,
+    renderLoader: null,
   };
 
   renderLoader() {
@@ -57,7 +59,11 @@ export default class LoadingView extends Component {
       loaderStyle,
       indicatorColor,
       indicatorSize,
+      renderLoader,
     } = this.props;
+    if (renderLoader) {
+      return renderLoader();
+    }
     return (
       <View style={[StyleSheet.absoluteFill, loaderStyle, { backgroundColor }]}>
         <ActivityIndicator
