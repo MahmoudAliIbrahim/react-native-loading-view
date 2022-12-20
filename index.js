@@ -72,7 +72,7 @@ export default class LoadingView extends Component {
 
     return (
       <View style={[StyleSheet.absoluteFill, loaderStyle, { backgroundColor }]}>
-        {renderLoadingIndicator()}
+        {this.renderLoadingIndicator()}
         <Text style={textStyle}>{text}</Text>
       </View>
     );
