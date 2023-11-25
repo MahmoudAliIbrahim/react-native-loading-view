@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import {
   StyleSheet,
@@ -20,25 +20,25 @@ const styles = StyleSheet.create({
 });
 
 const LoadingView = ({
-  containerStyle,
+  containerStyle = styles.container,
   children,
   isLoading,
-  backgroundColor,
+  backgroundColor = "#FFF",
   text,
   textStyle,
-  loaderStyle: propLoaderStyle,
-  indicatorColor,
-  indicatorSize,
+  loaderStyle = styles.loaderStyle,
+  indicatorColor = "#000",
+  indicatorSize = Platform.select({
+    ios: "large",
+    android: 75,
+  }),
   unmount,
   renderLoader,
 }) => {
-  const [showContent, setShowContent] = useState(true);
-
-  useEffect(() => {
-    if (unmount) {
-      setShowContent(!isLoading);
-    }
-  }, [isLoading, unmount]);
+  const showContent = useMemo(
+    () => (unmount ? !isLoading : true),
+    [isLoading, unmount]
+  );
 
   const renderLoadingIndicator = () =>
     renderLoader ? (
@@ -52,9 +52,7 @@ const LoadingView = ({
     );
 
   const renderLoaderComponent = () => (
-    <View
-      style={[StyleSheet.absoluteFill, propLoaderStyle, { backgroundColor }]}
-    >
+    <View style={[StyleSheet.absoluteFill, loaderStyle, { backgroundColor }]}>
       {renderLoadingIndicator()}
       {text && <Text style={textStyle}>{text}</Text>}
     </View>
@@ -80,23 +78,6 @@ LoadingView.propTypes = {
   indicatorSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   unmount: PropTypes.bool,
   renderLoader: PropTypes.func,
-};
-
-LoadingView.defaultProps = {
-  containerStyle: styles.container,
-  children: null,
-  isLoading: false,
-  backgroundColor: "#FFF",
-  text: null,
-  textStyle: null,
-  loaderStyle: styles.loaderStyle,
-  indicatorColor: "#000",
-  indicatorSize: Platform.select({
-    ios: "large",
-    android: 75,
-  }),
-  unmount: false,
-  renderLoader: null,
 };
 
 export default React.memo(LoadingView);
