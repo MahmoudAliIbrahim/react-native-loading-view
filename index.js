@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -19,78 +19,84 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class LoadingView extends Component {
-  static propTypes = {
-    containerStyle: PropTypes.object,
-    children: PropTypes.element.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    backgroundColor: PropTypes.string,
-    text: PropTypes.string,
-    textStyle: PropTypes.object,
-    loaderStyle: PropTypes.object,
-    indicatorColor: PropTypes.string,
-    indicatorSize: PropTypes.string || PropTypes.number,
-    unmount: PropTypes.bool,
-    renderLoader: PropTypes.func,
-  };
+const LoadingView = ({
+  containerStyle,
+  children,
+  isLoading,
+  backgroundColor,
+  text,
+  textStyle,
+  loaderStyle: propLoaderStyle,
+  indicatorColor,
+  indicatorSize,
+  unmount,
+  renderLoader,
+}) => {
+  const [showContent, setShowContent] = useState(true);
 
-  static defaultProps = {
-    containerStyle: styles.container,
-    children: null,
-    isLoading: false,
-    backgroundColor: "#FFF",
-    text: null,
-    textStyle: null,
-    loaderStyle: styles.loaderStyle,
-    indicatorColor: "#000",
-    indicatorSize: Platform.select({
-      ios: "large",
-      android: 75,
-    }),
-    unmount: false,
-    renderLoader: null,
-  };
-
-  renderLoadingIndicator() {
-    const { indicatorColor, indicatorSize, renderLoader } = this.props;
-
-    if (renderLoader) {
-      return renderLoader();
+  useEffect(() => {
+    if (unmount) {
+      setShowContent(!isLoading);
     }
+  }, [isLoading, unmount]);
 
-    return (
+  const renderLoadingIndicator = () =>
+    renderLoader ? (
+      renderLoader()
+    ) : (
       <ActivityIndicator
         color={indicatorColor}
         size={indicatorSize}
         animating
       />
     );
-  }
 
-  renderLoader() {
-    const { backgroundColor, text, textStyle, loaderStyle } = this.props;
+  const renderLoaderComponent = () => (
+    <View
+      style={[StyleSheet.absoluteFill, propLoaderStyle, { backgroundColor }]}
+    >
+      {renderLoadingIndicator()}
+      {text && <Text style={textStyle}>{text}</Text>}
+    </View>
+  );
 
-    return (
-      <View style={[StyleSheet.absoluteFill, loaderStyle, { backgroundColor }]}>
-        {this.renderLoadingIndicator()}
-        <Text style={textStyle}>{text}</Text>
-      </View>
-    );
-  }
+  return (
+    <View style={containerStyle}>
+      {showContent && children}
+      {isLoading && renderLoaderComponent()}
+    </View>
+  );
+};
 
-  render() {
-    const { containerStyle, children, isLoading, unmount } = this.props;
-    let showContent;
-    if (unmount) {
-      showContent = unmount && isLoading ? false : true;
-    } else {
-      showContent = true;
-    }
-    return (
-      <View style={containerStyle}>
-        {showContent && children}
-        {isLoading && this.renderLoader()}
-      </View>
-    );
-  }
-}
+LoadingView.propTypes = {
+  containerStyle: PropTypes.object,
+  children: PropTypes.element.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  backgroundColor: PropTypes.string,
+  text: PropTypes.string,
+  textStyle: PropTypes.object,
+  loaderStyle: PropTypes.object,
+  indicatorColor: PropTypes.string,
+  indicatorSize: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  unmount: PropTypes.bool,
+  renderLoader: PropTypes.func,
+};
+
+LoadingView.defaultProps = {
+  containerStyle: styles.container,
+  children: null,
+  isLoading: false,
+  backgroundColor: "#FFF",
+  text: null,
+  textStyle: null,
+  loaderStyle: styles.loaderStyle,
+  indicatorColor: "#000",
+  indicatorSize: Platform.select({
+    ios: "large",
+    android: 75,
+  }),
+  unmount: false,
+  renderLoader: null,
+};
+
+export default React.memo(LoadingView);
