@@ -1,7 +1,7 @@
 {
   "name": "@mahmoudaliibrahim/react-native-loading-view",
   "title": "React Native Loading View",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Simple react-native loading view to use while waiting data to be fetched from remote api",
   "main": "index.js",
   "files": [
@@ -27,8 +27,8 @@
   "licenseFilename": "LICENSE",
   "readmeFilename": "README.md",
   "peerDependencies": {
-    "react": "^16.8.1",
-    "react-native": ">=0.60.0-rc.0 <1.0.x"
+    "react": "^18.2.0",
+    "react-native": "^0.72.7"
   },
   "devDependencies": {
     "prop-types": "^15.7.2",
