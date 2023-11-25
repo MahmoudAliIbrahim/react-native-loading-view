@@ -26,6 +26,7 @@ yarn:
 | indicatorColor  | color of the loading indicator                               | String           |
 | indicatorSize   | loading indicator size (React native ActivityIndicator size) | String or Number |
 | unmount         | boolean to unmount the children view while isLoading is true | Boolean          |
+| renderLoader    | prop for using custom loader instead of default one          | Function         |
 
 ## Usage
 
